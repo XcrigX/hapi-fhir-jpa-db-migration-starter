@@ -1,0 +1,204 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.xcrigx</groupId>
+    <artifactId>hapi-fhir-jpa-db-migration-starter</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <!--<parent>
+        <groupId>ca.uhn.hapi.fhir</groupId>
+        <artifactId>hapi-fhir</artifactId>
+        <version>7.6.0</version>
+    </parent> -->
+
+
+    <!-- !!Match the spring version used by HAPI, look for spring_boot_version in the corresponding tag here: see: https://github.com/hapifhir/hapi-fhir/blob/v7.6.0/pom.xml -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.6</version>
+    </parent>
+
+    
+    <properties>
+        <!-- Generic properties -->
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <hapi.fhir.version>7.6.0</hapi.fhir.version>
+
+    </properties>
+
+    <!-- !!Match the azure version to the springboot version -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- to enable managed identidy auth in azure sql -->
+            <!-- https://github.com/Azure/azure-sdk-for-java/wiki/Spring-Versions-Mapping#which-version-of-spring-cloud-azure-should-i-use -->
+            <dependency>
+                <groupId>com.azure.spring</groupId>
+                <artifactId>spring-cloud-azure-dependencies</artifactId>
+                <version>5.19.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!--<version>${maven.compiler.plugin.version}</version>-->
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!--<version>${maven.surefire.plugin.version}</version>-->
+                <configuration>
+                    <skipTests>false</skipTests>
+                    <enableAssertions>true</enableAssertions>
+                </configuration>
+            </plugin>
+
+
+            <!-- Generate Javadoc JAR file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            <!--<version>${maven.javadoc.plugin.version}</version>-->
+            <executions>
+                <execution>
+                    <id>attach-javadoc</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>attach-test-javadoc</id>
+                    <goals>
+                        <goal>test-jar</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <!-- Generate sources JAR file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            <!--<version>${maven.source.plugin.version}</version>-->
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>attach-test-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>test-jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <!-- http://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- create a jar or war file that is auto-executable -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- http://docs.spring.io/spring-boot/docs/current/maven-plugin/repackage-mojo.html -->
+                            <goal>repackage</goal>
+                            <!-- have spring generate build info which will be exposed on the actuator/info enddpoint -->
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- set a main class for the executable jar -->
+                    <!-- <mainClass>${start-class}</mainClass> -->
+                    <!-- embed *nix launch script to run as a service -->
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+            <!--<version>${spring_boot_version}</version>-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+            <!--<version>${spring_boot_version}</version>-->
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+            <!--<version>${spring_boot_version}</version>-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+            <!--<version>${spring_boot_version}</version>-->
+		</dependency>
+
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-base</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-jpaserver-base</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-sql-migrate</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+        </dependency>
+
+        <!-- required to handle managed identity auth to sql server -->
+        <dependency>
+            <groupId>com.azure.spring</groupId>
+            <artifactId>spring-cloud-azure-starter</artifactId>
+        </dependency>
+
+
+
+
+</dependencies>
+</project>

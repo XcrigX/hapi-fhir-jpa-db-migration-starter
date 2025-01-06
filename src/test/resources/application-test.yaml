@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    #url:
+    #driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #username:
+    #password:
+
+logging:
+  pattern:
+    xconsole: "%date{yyyy-MM-dd/HH:mm:ss.SSS/zzz} %-5p \\(%file:%line\\) [%thread] :: %msg %n"
+  level:
+    root: INFO
+    com:
+      github:
+        xcrigx: TRACE
