@@ -1,9 +1,10 @@
-package com.github.xcrigx.springstub.config;
+package com.github.xcrigx.hapi.migratedb.config;
 
+import com.github.xcrigx.hapi.migratedb.rest.PackageScanDummy;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-@ComponentScan(basePackageClasses = { com.github.xcrigx.springstub.rest.PackageScanDummy.class })
+@ComponentScan(basePackageClasses = { PackageScanDummy.class })
 @Configuration
 //@Import(WebMvcAutoConfiguration.class)
 //@EnableConfigurationProperties(ApplicationProperties.class)

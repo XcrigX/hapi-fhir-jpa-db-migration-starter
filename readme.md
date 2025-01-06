@@ -10,7 +10,7 @@ API Parameters:
   
 - dryRun = true/false - tells the migration utility to whether to perform a dry-run vs actual migration
 
-- apiKey - An api key which is required to invoke the API. Intended as an added measure of psuedo-security to precent unathorized invocations. A generated or secret API key can be injected at deploy time to override the default.
+- apiKey - An api key which is required to invoke the API. Intended as an added measure of psuedo-security to prevent unauthorized invocations. A generated or secret API key can be injected at deploy time to override the default.
 
 Example invocation: 
 http://localhost:8080/migratedb/migrate-db?dbType=POSTGRES_9_4&dryRun=true&apiKey=ABC123

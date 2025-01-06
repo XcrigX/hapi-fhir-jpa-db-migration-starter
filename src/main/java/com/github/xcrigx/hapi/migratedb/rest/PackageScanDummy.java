@@ -1,4 +1,4 @@
-package com.github.xcrigx.springstub.rest;
+package com.github.xcrigx.hapi.migratedb.rest;
 
 /**
  * dummy class just to allow refactor-safe package scanning

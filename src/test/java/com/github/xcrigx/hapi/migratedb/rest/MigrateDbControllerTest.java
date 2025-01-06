@@ -1,6 +1,6 @@
-package com.github.xcrigx.springstub.rest;
+package com.github.xcrigx.hapi.migratedb.rest;
 
-import com.github.xcrigx.springstub.config.SpringConfig;
+import com.github.xcrigx.hapi.migratedb.config.SpringConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;

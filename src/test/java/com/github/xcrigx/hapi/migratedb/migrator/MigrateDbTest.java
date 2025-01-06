@@ -1,7 +1,7 @@
-package com.github.xcrigx.springstub.hapi.migratedb;
+package com.github.xcrigx.hapi.migratedb.migrator;
 
 import ca.uhn.fhir.jpa.migrate.DriverTypeEnum;
-import com.github.xcrigx.springstub.config.SpringConfig;
+import com.github.xcrigx.hapi.migratedb.config.SpringConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

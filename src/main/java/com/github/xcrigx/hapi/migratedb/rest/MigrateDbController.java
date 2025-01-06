@@ -1,7 +1,7 @@
-package com.github.xcrigx.springstub.rest;
+package com.github.xcrigx.hapi.migratedb.rest;
 
 import ca.uhn.fhir.jpa.migrate.DriverTypeEnum;
-import com.github.xcrigx.springstub.hapi.migratedb.HapiMigrateDb;
+import com.github.xcrigx.hapi.migratedb.migrator.HapiMigrateDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

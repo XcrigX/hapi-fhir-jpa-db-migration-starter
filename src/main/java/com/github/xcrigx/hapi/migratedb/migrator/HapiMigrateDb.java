@@ -1,4 +1,4 @@
-package com.github.xcrigx.springstub.hapi.migratedb;
+package com.github.xcrigx.hapi.migratedb.migrator;
 
 import ca.uhn.fhir.jpa.migrate.DriverTypeEnum;
 import ca.uhn.fhir.jpa.migrate.HapiMigrator;
